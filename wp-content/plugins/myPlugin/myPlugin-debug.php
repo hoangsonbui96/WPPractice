@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: SonPlugin
  * Description: PlugIn của bùi hoàng sơn
@@ -55,13 +56,13 @@ use NewsFooter as GlobalNewsFooter;
 // echo '</pre>';
 
 // $sql = "CREATE TABLE `testnewtable` (
-    //     `id` int(255) NOT NULL AUTO_INCREMENT,
-    //     `name` varchar(2000) NOT NULL,
-    //     PRIMARY KEY (`id`)
-    //   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci";
-    // require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    // dbDelta($sql);
-    
+//     `id` int(255) NOT NULL AUTO_INCREMENT,
+//     `name` varchar(2000) NOT NULL,
+//     PRIMARY KEY (`id`)
+//   ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci";
+// require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+// dbDelta($sql);
+
 
 
 
@@ -89,12 +90,18 @@ use NewsFooter as GlobalNewsFooter;
 define('SONBUI_MP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('SONBUI_MP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
-//B1:khai báo đường dẫn để lấy file public
-$publicDir = SONBUI_MP_PLUGIN_DIR .'/includes/public.php';
-//B2:add file public để sử dụng
-require_once($publicDir);
-//B3:khởi tạo đối tượng
-new NewsFooter();
+if (!is_admin()) {
+    //B1:khai báo đường dẫn để lấy file public
+    $publicDir = SONBUI_MP_PLUGIN_DIR . '/includes/public.php';
+    //B2:add file public để sử dụng
+    require_once($publicDir);
+    //B3:khởi tạo đối tượng
+    new NewsFooter();
+} else {
+    $adminDir = SONBUI_MP_PLUGIN_DIR . '/includes/admin.php';
+    require_once($adminDir);
+    new NewsAdminClass();
+}
 
 //echo $publicDir;
 //$getPublicConstruc = 
